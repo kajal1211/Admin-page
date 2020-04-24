@@ -1,29 +1,33 @@
-/* import React from 'react'
 
-
-function Sidebar() {
-  return (
-    <div style={{width: '20%'}}>  
-    <ul style={{backgroundColor:'#ffff00'}}>
-        <li>User Profile</li> 
-        <li>Add student</li>
-    </ul> 
-    </div>   
-  )
-}
-
-
-export default Sidebar */
-
-import React from 'react';
+import React, {Component} from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
+import ListSubheader from '@material-ui/core/ListSubheader';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import DeleteOutline from '@material-ui/icons/DeleteOutline'
+import { Link } from 'react-router-dom';
+import history from './history';
+
+import Drawer from '@material-ui/core/Drawer'
+import { AppBar, Toolbar, Typography, Divider, MenuItem } from '@material-ui/core';
+
+export default class Sidebar extends Component{
+  render(){
+    return(
+      <Drawer variant="permanent">
+        {mainListItems}
+        {secondaryListItems}
+        {thirdListItems}
+      </Drawer>  
+    )
+  }
+}
+
 
 export const mainListItems = (
   <div>
@@ -34,13 +38,14 @@ export const mainListItems = (
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Admin Profile" />
+      {/* <Link to={'/AddCourse'}>Add Course</Link> */} 
     </ListItem>
 
-    <ListItem button>
+    <ListItem button onClick={()=>{history.push('/SeeHistory')}}>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="History" />
+      <ListItemText primary="See History" />
     </ListItem>
 
   </div>
@@ -49,19 +54,19 @@ export const mainListItems = (
 export const secondaryListItems = (
   <div>
     
-    <ListItem button>
+    <ListItem button onClick={()=>{history.push('/AddCourse')}}>
       <ListItemIcon>
         <AddCircleOutline/>
       </ListItemIcon>
       <ListItemText primary="Add Course" />
     </ListItem>
-    <ListItem button>
+    <ListItem button onClick={()=>{history.push('/AddTeacher')}}>
       <ListItemIcon>
         <AddCircleOutline/> 
       </ListItemIcon>
       <ListItemText primary="Add Teacher" />
     </ListItem>
-    <ListItem button>
+    <ListItem button onClick={()=>{history.push('/AddStudent')}}>
       <ListItemIcon>
         <AddCircleOutline/>
       </ListItemIcon>
@@ -73,23 +78,21 @@ export const secondaryListItems = (
 export const thirdListItems = (
   <div>
     
-    <ListItem button>
-      <ListItemIcon>
-        <DeleteOutline/>
-      </ListItemIcon>
-      <ListItemText primary="Delete Course" />
-    </ListItem>
-    <ListItem button>
+    <ListItem button onClick={()=>{history.push('/DeleteTeacher')}}>
       <ListItemIcon>
         <DeleteOutline/>
       </ListItemIcon>
       <ListItemText primary="Delete Teacher" />
     </ListItem>
-    <ListItem button>
+
+    <ListItem button onClick={()=>{history.push('/DeleteStudent')}}>
       <ListItemIcon>
         <DeleteOutline/>
       </ListItemIcon>
       <ListItemText primary="Delete Student" />
     </ListItem>
+    
   </div>
 );
+
+

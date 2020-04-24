@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,32 +10,62 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import logo from './images/ApexLogo.jpg'
+import logo from './images/ApexLogo.jpg';
+import history from './history'
+import firebase from './config'
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: '10%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
- 
-  /* form: {
-    width: '100%',
-   
-  }, */
-  submit: {
-    marginTop: '10%',
-  },
-  image: {
-    height: '30%',
-    width: '30%',
+
+export default class SignIn extends Component {
+  state={
+    email:'',
+    password: '',
+    Students: [],
   }
-}));
+  handleInputChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value })
+  };
+  studentProfile = (event) => {
+    event.preventDefault();
+    //const { email, password } = this.state;
+    
+    firebase
+    .auth()
+    .signInWithEmailAndPassword(this.state.email, this.state.password)
+    .then((user) => {
+    
+      this.props.history.push({
+        pathname: '/AdminProfile',
+        email: this.state.email});
+    })
+      .catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+      }) 
+     
+  };
 
-export default function SignIn() {
-  const classes = useStyles();
-  
+  render(){
+    const classes = makeStyles((theme) => ({
+      paper: {
+        marginTop: '10%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      },
+     
+      /* form: {
+        width: '100%',
+       
+      }, */
+      submit: {
+        marginTop: '10%',
+      },
+      image: {
+        height: '30%',
+        width: '30%',
+      }
+    }));
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -55,8 +85,11 @@ export default function SignIn() {
             id="email"
             label="Email Address"
             name="email"
+            //value={this.state.email}
+            onChange={this.handleInputChange  }
             autoComplete="email"
             autoFocus
+            
           />
           <TextField
             variant="outlined"
@@ -66,6 +99,8 @@ export default function SignIn() {
             name="password"
             label="Password"
             type="password"
+            //value={this.state.password}
+            onChange={this.handleInputChange  }
             id="password"
             autoComplete="current-password"
           />
@@ -79,6 +114,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={this.studentProfile}
           >
             Sign In
           </Button>
@@ -92,4 +128,5 @@ export default function SignIn() {
       
     </Container>
   );
+  }
 }

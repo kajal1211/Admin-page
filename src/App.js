@@ -3,20 +3,23 @@ import logo from './logo.svg';
 import './App.css';
 //import * as firebase from 'firebase';
 import { render } from '@testing-library/react';
-import {firebaseApp} from './config'
+//import {firebaseApp} from './config'
 import {mainListItems, secondaryListItems, thirdListItems} from './sidebar';
 import Title from './Title';
-import History from './History';
+import History from './history';
 import SignIn from './SignIn';
 import Drawer from '@material-ui/core/Drawer'
 import { AppBar, Toolbar, Typography, Divider } from '@material-ui/core';
-class App extends Component  {
+import Routes from './Routes'
+import {Router} from 'react-router-dom'
+
+export class App extends Component  {
   state={
    
     data : '',
     mylist : [],
 }
-componentDidMount() {
+/* componentDidMount() {
  
   const data = firebaseApp.database().ref("Courses/CDS July 2018/Notifications")
   data
@@ -32,7 +35,7 @@ componentDidMount() {
     }
     
   })
-  } 
+  }  */
   render() {
     
   return (
@@ -41,7 +44,7 @@ componentDidMount() {
           <Title>Admin profile</Title>
       </AppBar>
     
-      <Drawer
+     {/*  <Drawer
         variant="permanent" 
       >
         <div style={{height: '8%',}}></div>
@@ -52,7 +55,7 @@ componentDidMount() {
      <Divider/>
      {thirdListItems}
      <Divider/>
-     </Drawer>
+     </Drawer> */}
      <div style={{marginTop:'5%',}}>
      <History/> 
      </div>
@@ -61,4 +64,13 @@ componentDidMount() {
   );
 }
 }
-export default App;
+//export default App;
+
+function R() {
+  return (
+    <Router>
+      <Routes />
+    </Router>
+  );
+}
+export default R;
