@@ -8,11 +8,14 @@ import { AppBar, Toolbar, Typography, Divider,Button, TextField } from '@materia
 import history from './history';
 import Container from '@material-ui/core/Container';
 import firebase from './config'
-
+import {FormLabel, RadioGroup, FormControlLabel, Radio} from '@material-ui/core'
 class AddCourse extends Component  {
     state={
       courseName:'',
       list:[],
+      courseStatus:'',
+      courseDetails:'',
+      
     }
   handleInputChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
@@ -21,10 +24,12 @@ class AddCourse extends Component  {
      
       //alert(JSON.stringify(this.state.courseName))
       let sub = this.state.courseName;
-       
-      console.log('course'+sub)
       
-      if(sub === "")
+      var courseDetails = this.state.courseDetails; 
+      var courseStatus = this.state.courseStatus
+      //console.log('course'+sub)
+      
+      if(sub === "" || courseDetails==="")
         {
           alert("Your course name is empty")
         
@@ -45,10 +50,17 @@ class AddCourse extends Component  {
         const data =  firebase.database().ref("Courses/"+sub)
         data.update(
           {
-            ActiveStatus: 'Active'
+            ActiveStatus: courseStatus,
+            
+            Details: courseDetails,
           } )
-          console.log("Added")
+          //console.log("Added")
        }
+  }
+
+  radioChange=(e)=>{
+    //console.log("Status: "+e.target.value)
+    this.setState({courseStatus:e.target.value});
   }
   render() {
     
@@ -105,6 +117,29 @@ class AddCourse extends Component  {
             autoFocus
             
           />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="courseDetails"
+            label="Course Details"
+            name="courseDetails"
+            //value={this.state.email}
+            onChange={this.handleInputChange}
+            autoComplete="courseDetails"
+            autoFocus
+            
+          />
+          
+          <FormLabel component="legend">Course Status </FormLabel>
+            <RadioGroup defaultValue="Inactive" aria-label="status" name="customized-radios" onChange={this.radioChange}>
+              <FormControlLabel value="Active" control={<Radio />} label="Active" />
+              <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" /> 
+             
+            </RadioGroup>
+
             <Button
             
             fullWidth

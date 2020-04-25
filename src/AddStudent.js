@@ -8,46 +8,85 @@ import { AppBar, Toolbar, Typography, Divider,Button, TextField } from '@materia
 import history from './history';
 import Container from '@material-ui/core/Container';
 import firebase from './config'
-
+import {Select, InputLabel, MenuItem} from '@material-ui/core'
 
 class AddStudent extends Component  {
   state={
     courseName:'',
     list:[],
+    courseNameList: [],
+    selectValue: 'CDS June 2019',
+    studentName: '',
+    studentEmail: '',
+    studentContact: '',
+    
   }
+  componentDidMount() {
+    
+    this.state.data = firebase.database().ref("Courses")
+    this.state.data
+    .on('value', datasnap => {
+      if(datasnap.val())
+        {
+        this.setState({courseNameList: Object.keys(datasnap.val())}, function() {
+          
+          console.log("Keys: "+this.state.courseNameList);
+        
+        });
+      }
+     
+    })
+    } 
   handleInputChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value })
+    this.setState({ [event.target.name]: event.target.value },
+      
+    )
   }; 
-  addCourse=()=>{
+  addStudent=()=>{
      
       //alert(JSON.stringify(this.state.courseName))
-      let sub = this.state.courseName;
-       
-      console.log('course'+sub)
+      let sub = this.state.selectValue;
+      var Name = this.state.studentName
+      var Email = this.state.studentEmail
+      var Contact = this.state.studentContact
+      var RandomId = JSON.stringify(Math.floor(Math.random() * 1000) + 1)
+      //console.log('course'+sub)
       
-      if(sub === "")
+      if(sub === "" || Name==="" || Email==="" || Contact==="")
         {
-          alert("Your course name is empty")
+          alert("Fill all the details...")
         
         }
       else{
         const data =  firebase.database().ref("Courses/"+sub+"/Students")
         const Students = firebase.database().ref("Students")
+
+       
         data.push().set(
           {
-            Name: 'Aish ghate',
-            Contacts: '123345566',
+            Name: Name,
+            Contact: Contact,
+            Email: Email,
           } )
-
-        Students.update(
+        if(window.confirm("Enrolling this student for the first time in this institute"))  
+        {
+          //var StudentInfo = RandomId+':'+Name
+          //console.log("StudentInfo: "+StudentInfo)
+         Students.update(
           {
-            11: 'Aish ghate',
+            "123": Name
           }
         )  
           console.log("Added")
+        }
        }
   }
+   handleChange=(e)=>{
+      this.setState({selectValue:e.target.value});
+    
+  } 
   render() {
+    var i = 0
     const classes = makeStyles((theme) => ({
       paper: {
         marginTop: '10%',
@@ -86,30 +125,72 @@ class AddStudent extends Component  {
         </AppBar> */}
 
         <form >
+          <InputLabel id="label">Course Names</InputLabel>
+          <Select labelId="label" id="select" value={this.state.selectValue} 
+            onChange={this.handleChange} >
+          {this.state.courseNameList.map((e, i) => {
+            return <MenuItem key={i++} value={e}>{e}</MenuItem>;
+            })}
+          </Select>
+
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="coursename"
-            label="Course Name"
-            name="courseName"
+            id="studentName"
+            label="Student Name"
+            name="studentName"
             //value={this.state.email}
             onChange={this.handleInputChange}
-            autoComplete="coursename"
+            autoComplete="studentName"
             autoFocus
             
           />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            type="email"
+            id="studentEmail"
+            label="Student Email"
+            name="studentEmail"
+            //value={this.state.email}
+            onChange={this.handleInputChange}
+            autoComplete="studentEmail"
+            autoFocus
+            
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="studentContact"
+            label="Student Contact"
+            name="studentContact"
+            //value={this.state.email}
+            onChange={this.handleInputChange}
+            autoComplete="studentContact"
+            autoFocus
+            
+          />
+
             <Button
             
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={this.addCourse}
+            onClick={this.addStudent}
           >
             ADD STUDENT
           </Button>
+
+          
         </form>  
     </div>
    </Container>   

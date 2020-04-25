@@ -55,7 +55,7 @@ class DeleteTeacher extends Component  {
     if(window.confirm("Are you sure you wanna delete this item?"))
     {      
           const ex = this.state.teacherslist;
-          console.log("ex: "+ ex)
+          //console.log("ex: "+ ex)
           ex.map((item,index) => {
              //console.log("item: "+item)
             if(item.match(teachername)) {
@@ -67,11 +67,11 @@ class DeleteTeacher extends Component  {
                 })
           if(activeState==0)
             {
-                console.log("not found")
+              alert("This email is not found to delelte!!!")
             }
           else{
               this.state.data.child(this.state.teacherslistkeys[i]).remove()
-              console.log("removed")
+              //console.log("removed")
           }  
         }    
       
@@ -124,7 +124,7 @@ class DeleteTeacher extends Component  {
             required
             fullWidth
             id="teachername"
-            label="Teacher Name"
+            label="Teacher Email"
             name="teachername"
             //value={this.state.email}
             onChange={this.handleInputChange}
