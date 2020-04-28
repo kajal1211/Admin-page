@@ -6,7 +6,7 @@ import { render } from '@testing-library/react';
 //import {firebaseApp} from './config'
 import {mainListItems, secondaryListItems, thirdListItems} from './sidebar';
 import Title from './Title';
-import History from './history';
+import History from './History';
 import SignIn from './SignIn';
 import Drawer from '@material-ui/core/Drawer'
 import { AppBar, Toolbar, Typography, Divider } from '@material-ui/core';

@@ -11,7 +11,7 @@ import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import DeleteOutline from '@material-ui/icons/DeleteOutline'
 import { Link } from 'react-router-dom';
-import history from './history';
+import history from './History';
 
 import Drawer from '@material-ui/core/Drawer'
 import { AppBar, Toolbar, Typography, Divider, MenuItem } from '@material-ui/core';

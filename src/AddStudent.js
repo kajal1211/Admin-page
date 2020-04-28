@@ -5,7 +5,7 @@ import './App.css';
 import Title from './Title';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Divider,Button, TextField } from '@material-ui/core';
-import history from './history';
+import history from './History';
 import Container from '@material-ui/core/Container';
 import firebase from './config'
 import {Select, InputLabel, MenuItem} from '@material-ui/core'
@@ -74,7 +74,7 @@ class AddStudent extends Component  {
           //console.log("StudentInfo: "+StudentInfo)
          Students.update(
           {
-            "123": Name
+            "123": Email
           }
         )  
           console.log("Added")

@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import logo from './images/ApexLogo.jpg';
-import history from './history'
+import history from './History'
 import firebase from './config'
 
 
