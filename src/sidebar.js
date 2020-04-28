@@ -10,6 +10,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import DeleteOutline from '@material-ui/icons/DeleteOutline'
+import Edit from '@material-ui/icons/Edit'
 import { Link } from 'react-router-dom';
 import history from './history';
 
@@ -71,6 +72,24 @@ export const secondaryListItems = (
         <AddCircleOutline/>
       </ListItemIcon>
       <ListItemText primary="Add Student" />
+    </ListItem>
+    <ListItem button onClick={()=>{history.push('/AddMarks')}}>
+      <ListItemIcon>
+        <AddCircleOutline/>
+      </ListItemIcon>
+      <ListItemText primary="Add Marks" />
+    </ListItem>
+    <ListItem button onClick={()=>{history.push('/UpcomingCourses')}}>
+      <ListItemIcon>
+        <AddCircleOutline/>
+      </ListItemIcon>
+      <ListItemText primary="Upcoming Courses" />
+    </ListItem>
+    <ListItem button onClick={()=>{history.push('/UpdateStatus')}}>
+      <ListItemIcon>
+        <Edit/>
+      </ListItemIcon>
+      <ListItemText primary="Update Status" />
     </ListItem>
   </div>
 );
