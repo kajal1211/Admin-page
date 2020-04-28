@@ -4,7 +4,7 @@ import firebase from './config'
 import {Button, Typography, TextField} from '@material-ui/core'
 import {Card, View} from '@material-ui/core'
 import {Select, InputLabel, MenuItem} from '@material-ui/core'
-import './Style.css'
+
 
 export default class AddMarks extends Component{
     state={
