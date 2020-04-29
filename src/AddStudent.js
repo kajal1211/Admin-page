@@ -73,14 +73,14 @@ class AddStudent extends Component  {
         {
          
          Students.push(
-          {
+          
 
 
 
             Email
 
 
-          }
+          
         )  
         }
 

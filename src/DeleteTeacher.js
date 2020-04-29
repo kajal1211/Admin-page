@@ -71,6 +71,7 @@ class DeleteTeacher extends Component  {
             }
           else{
               this.state.data.child(this.state.teacherslistkeys[i]).remove()
+             
               //console.log("removed")
           }  
         }    
