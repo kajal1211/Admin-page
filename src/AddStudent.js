@@ -18,6 +18,7 @@ class AddStudent extends Component  {
     selectValue: 'CDS June 2019',
     studentName: '',
     studentEmail: '',
+    studentPassword:'',
     studentContact: '',
     
   }
@@ -30,7 +31,6 @@ class AddStudent extends Component  {
         {
         this.setState({courseNameList: Object.keys(datasnap.val())}, function() {
           
-          console.log("Keys: "+this.state.courseNameList);
         
         });
       }
@@ -49,10 +49,11 @@ class AddStudent extends Component  {
       var Name = this.state.studentName
       var Email = this.state.studentEmail
       var Contact = this.state.studentContact
-      var RandomId = JSON.stringify(Math.floor(Math.random() * 1000) + 1)
+      var Password=this.state.studentPassword
+     // var RandomId = JSON.stringify(Math.floor(Math.random() * 1000) + 1)
       //console.log('course'+sub)
       
-      if(sub === "" || Name==="" || Email==="" || Contact==="")
+      if(sub === "" || Name==="" || Email==="" || Contact==="" || Password==='')
         {
           alert("Fill all the details...")
         
@@ -70,15 +71,29 @@ class AddStudent extends Component  {
           } )
         if(window.confirm("Enrolling this student for the first time in this institute"))  
         {
-          //var StudentInfo = RandomId+':'+Name
-          //console.log("StudentInfo: "+StudentInfo)
-         Students.update(
+         
+         Students.push(
           {
-            "123": Email
+
+
+
+            Email
+
+
           }
         )  
-          console.log("Added")
         }
+
+        firebase.auth().createUserWithEmailAndPassword(Email,Password)
+       .then((u)=>{
+         console.log('Successfully Signed up!')
+       })
+       .catch((err)=>{
+         console.log('Error'+err)
+       })
+
+       alert("Student Successfully Added!")
+
        }
   }
    handleChange=(e)=>{
@@ -153,7 +168,7 @@ class AddStudent extends Component  {
             margin="normal"
             required
             fullWidth
-            type="email"
+
             id="studentEmail"
             label="Student Email"
             name="studentEmail"
@@ -163,6 +178,23 @@ class AddStudent extends Component  {
             autoFocus
             
           />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+           
+            id="studentPassword"
+            label="Student Password"
+            name="studentPassword"
+            //value={this.state.email}
+            onChange={this.handleInputChange}
+            
+          type='password'
+            autoFocus
+            
+          />
+
 
           <TextField
             variant="outlined"

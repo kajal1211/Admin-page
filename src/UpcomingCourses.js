@@ -6,32 +6,36 @@ import Title from './Title';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Divider,Button, TextField } from '@material-ui/core';
 import history from './History';
-import Container from '@material-ui/core/Container';
+import Container from '@material-ui/core/Container'
 import firebase from './config'
 import {FormLabel, RadioGroup, FormControlLabel, Radio} from '@material-ui/core'
-class AddCourse extends Component  {
+import DatePicker from 'react-date-picker'
+class UpcomingCourses extends Component  {
     state={
       courseName:'',
       list:[],
-      courseStatus:'Inactive',
-      courseDetails:'',
+      courseFees: '',
+      startDate: new Date(),
+      endDate: new Date(),
+      courseDetail:'',
       
     }
   handleInputChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }; 
-  addCourse=()=>{
+  addInfo=()=>{
      
       //alert(JSON.stringify(this.state.courseName))
       let sub = this.state.courseName;
-      
-      var courseDetails = this.state.courseDetails; 
-      var courseStatus = this.state.courseStatus
+      var courseFees = this.state.courseFees;
+      var courseDetail = this.state.courseDetail; 
+      var startDate = this.state.startDate;
+      var endDate = this.state.endDate;
       //console.log('course'+sub)
       
-      if(sub === "" || courseDetails==="")
+      if(sub === "" || courseDetail==="" || courseFees==='')
         {
-          alert("Your course name is empty")
+          alert("Your course info is empty")
         
         }
       else{
@@ -47,21 +51,22 @@ class AddCourse extends Component  {
             });
           }
         }) */
-        const data =  firebase.database().ref("Courses/"+sub)
+        const data =  firebase.database().ref("Upcoming Courses/"+sub)
+
         data.update(
           {
-            ActiveStatus: courseStatus,
-            
-            Details: courseDetails,
+            Name: courseDetail,
+            End: endDate,
+            Start: startDate,
+            Fees: courseFees,
           } )
           //console.log("Added")
        }
   }
+  onChangeStart = date => this.setState({ startDate: date },
+    function(){console.log(date)})
+  onChangeEnd = date => this.setState({ endDate: date })
 
-  radioChange=(e)=>{
-    //console.log("Status: "+e.target.value)
-    this.setState({courseStatus:e.target.value});
-  }
   render() {
     
     const classes = makeStyles((theme) => ({
@@ -113,8 +118,23 @@ class AddCourse extends Component  {
             name="courseName"
             //value={this.state.email}
             onChange={this.handleInputChange}
-            autoComplete="coursename"
+            
             autoFocus
+            
+          />
+
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="courseDetail"
+            label="Course Details"
+            name="courseDetail"
+            //value={this.state.email}
+            onChange={this.handleInputChange}
+            
+            
             
           />
 
@@ -123,22 +143,28 @@ class AddCourse extends Component  {
             margin="normal"
             required
             fullWidth
-            id="courseDetails"
-            label="Course Details"
-            name="courseDetails"
+            id="courseFees"
+            label="Course Fees"
+            name="courseFees"
             //value={this.state.email}
             onChange={this.handleInputChange}
-            autoComplete="courseDetails"
-            autoFocus
+            
             
           />
-          
-          <FormLabel component="legend">Course Status </FormLabel>
-            <RadioGroup defaultValue="Inactive" aria-label="status" name="customized-radios" onChange={this.radioChange}>
-              <FormControlLabel value="Active" control={<Radio />} label="Active" />
-              <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" /> 
-             
-            </RadioGroup>
+
+        <div>
+            <DatePicker
+            onChange={this.onChangeStart}
+            value={this.state.startDate}
+            />
+        </div>
+
+        <div>
+            <DatePicker
+            onChange={this.onChangeEnd}
+            value={this.state.endDate}
+            />
+        </div>
 
             <Button
             
@@ -146,9 +172,9 @@ class AddCourse extends Component  {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={this.addCourse}
+            onClick={this.addInfo}
           >
-            ADD COURSE
+            ADD INFORMATION
           </Button>
         </form>  
     </div>
@@ -156,4 +182,4 @@ class AddCourse extends Component  {
   );
 }
 }
-export default AddCourse;
+export default UpcomingCourses;

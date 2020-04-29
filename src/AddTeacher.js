@@ -10,7 +10,7 @@ import Container from '@material-ui/core/Container';
 import firebase from './config'
 import {Select, InputLabel, MenuItem} from '@material-ui/core'
 
-class AddStudent extends Component  {
+class AddTeacher extends Component  {
   state={
     courseName:'',
     list:[],
@@ -18,6 +18,7 @@ class AddStudent extends Component  {
     selectValue: 'CDS June 2019',
     teacherName: '',
     teacherEmail: '',
+    teacherPassword:'',
     teacherContact: '',
     
   }
@@ -47,12 +48,13 @@ class AddStudent extends Component  {
       let sub = this.state.selectValue;
       var Name = this.state.teacherName
       var Email = this.state.teacherEmail
+    
       var Contact = this.state.teacherContact
-       
+       var Password=this.state.teacherPassword
       //console.log('course'+sub)
       
          
-      if(sub === "" || Name==="" || Email==="" || Contact==="")
+      if(sub === "" || Name==="" || Email==="" || Contact==="" || Password==='')
         {
           alert("Fill all the details...")
         
@@ -68,13 +70,26 @@ class AddStudent extends Component  {
           } )
         if(window.confirm("Enrolling this teacher for the first time in this institute"))  
           {  
-            Teachers.update(
-              {
-                "100": Name
-              }
+            
+            Teachers.push(
+              
+              
+               Email
+              
             )  
           //console.log("Added")
-       }}
+       }
+
+       firebase.auth().createUserWithEmailAndPassword(Email,Password)
+       .then((u)=>{
+         console.log('Successfully Signed up!')
+       })
+       .catch((err)=>{
+         console.log('Error'+err)
+       })
+      
+      alert("Teacher Successfully Added!")
+      }
   }
 
   handleChange=(e)=>{
@@ -160,13 +175,32 @@ class AddStudent extends Component  {
             
           />
 
+<TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+           
+            id="teacherPassword"
+            label="Teacher Password"
+            name="teacherPassword"
+            //value={this.state.email}
+            onChange={this.handleInputChange}
+            
+          type='password'
+            autoFocus
+            
+          />
+
+
+
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="teacherContact"
-            label="Student Contact"
+            label="Teacher Contact"
             name="teacherContact"
             //value={this.state.email}
             onChange={this.handleInputChange}
@@ -191,4 +225,4 @@ class AddStudent extends Component  {
   );
 }
 }
-export default AddStudent;
+export default AddTeacher;
