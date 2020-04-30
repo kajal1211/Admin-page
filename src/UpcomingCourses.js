@@ -60,7 +60,7 @@ class UpcomingCourses extends Component  {
             Start: startDate,
             Fees: courseFees,
           } )
-          //console.log("Added")
+          alert("Upcoming Course Successfully Added!")
        }
   }
   onChangeStart = date => this.setState({ startDate: date },
