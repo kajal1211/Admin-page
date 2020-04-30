@@ -42,11 +42,12 @@ export const mainListItems = (
       {/* <Link to={'/AddCourse'}>Add Course</Link> */} 
     </ListItem>
 
-    <ListItem button onClick={()=>{history.push('/SeeHistory')}}>
+
+    <ListItem button onClick={()=>{history.push('/CourseInfo')}}>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="See History" />
+      <ListItemText primary="Course Information" />
     </ListItem>
 
   </div>
@@ -79,11 +80,18 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText primary="Add Marks" />
     </ListItem>
+    
+    <ListItem button onClick={()=>{history.push('/AddSuccessStories')}}>
+      <ListItemIcon>
+        <AddCircleOutline/>
+      </ListItemIcon>
+      <ListItemText primary="Add Success Stories" />
+    </ListItem>
     <ListItem button onClick={()=>{history.push('/UpcomingCourses')}}>
       <ListItemIcon>
         <AddCircleOutline/>
       </ListItemIcon>
-      <ListItemText primary="Upcoming Courses" />
+      <ListItemText primary="Add Upcoming Courses" />
     </ListItem>
     <ListItem button onClick={()=>{history.push('/UpdateStatus')}}>
       <ListItemIcon>
@@ -109,6 +117,13 @@ export const thirdListItems = (
         <DeleteOutline/>
       </ListItemIcon>
       <ListItemText primary="Delete Student" />
+    </ListItem>
+
+    <ListItem button onClick={()=>{history.push('/DeleteUpcomingCourse')}}>
+      <ListItemIcon>
+        <DeleteOutline/>
+      </ListItemIcon>
+      <ListItemText primary="Delete Upcoming Course" />
     </ListItem>
     
   </div>

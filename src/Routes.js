@@ -12,6 +12,9 @@ import DeleteStudent from './DeleteStudent'
 import AddMarks from './AddMarks'
 import UpdateStatus from './UpdateStatus'
 import UpcomingCourses from './UpcomingCourses'
+import AddSuccessStories from './AddSuccessStories'
+import DeleteUpcomingCourse from './DeleteUpcomingCourse'
+import CourseInfo from './CourseInfo'
 export default class Routes extends Component{
     render(){
         return(
@@ -27,6 +30,9 @@ export default class Routes extends Component{
                     <Route path="/AddMarks" component={AddMarks} />
                     <Route path="/UpdateStatus" component={UpdateStatus} />
                     <Route path = '/UpcomingCourses' component= {UpcomingCourses} />
+                    <Route path = '/AddSuccessStories' component= {AddSuccessStories} />
+                    <Route path = '/DeleteUpcomingCourse' component= {DeleteUpcomingCourse} />
+                    <Route path = '/CourseInfo' component= {CourseInfo} />
                 </Switch>
             </Router>
         )

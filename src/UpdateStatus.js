@@ -129,7 +129,7 @@ class UpdateStatus extends Component  {
             className={classes.submit}
             onClick={this.changeStatus}
           >
-            CHANGE STATUS
+            UPDATE STATUS
           </Button>
 
           
