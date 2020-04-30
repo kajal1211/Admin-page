@@ -62,13 +62,14 @@ class AddTeacher extends Component  {
       else{
         const data =  firebase.database().ref("Courses/"+sub+"/Teacher")
         const Teachers = firebase.database().ref("Teachers")
+     
         data.push().set(
           {
             Name: Name,
             Contact: Contact,
             Email: Email,
           } )
-        if(window.confirm("Enrolling this teacher for the first time in this institute"))  
+        if(window.confirm("Enrolling this teacher for the first time in this course"))  
           {  
             
             Teachers.push(

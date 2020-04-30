@@ -55,6 +55,8 @@ class AddCourse extends Component  {
             Details: courseDetails,
           } )
           //console.log("Added")
+
+          alert('Course added succeffully!')
        }
   }
 

@@ -68,12 +68,12 @@ export default class DeleteUpcomingCourse extends Component{
               {"Name: "}{this.state.courseListKeys[index]}<br />
               {"Active Status: "}{listitem.ActiveStatus}<br />
               {"Details: "}{listitem.Details}<br />
-              <div>
+           {/*    <div>
                 {listitem.Students.length > 0
                 ?<h5>student FOUND</h5>
-                :<h5>NO sttudent FOUND</h5>
+                :<h5>No student FOUND</h5>
                 }
-              </div>
+              </div> */}
             </Card>
                 ))}
         </ul>

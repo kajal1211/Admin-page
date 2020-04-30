@@ -127,7 +127,7 @@ export default class AddMarks extends Component{
       else{
         data.update(
           {
-            Mark: marks,
+            Marks: marks,
             
           } )
       }
