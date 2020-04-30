@@ -74,7 +74,7 @@ class DeleteStudent extends Component  {
           else{
               //console.log("i1: "+i)
               this.state.data.child(this.state.studentlistkeys[i]).remove()
-              //console.log("removed")
+              alert("Student Successfully Deleted!")
           }  
         }    
       

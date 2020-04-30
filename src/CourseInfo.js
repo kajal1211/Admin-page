@@ -8,48 +8,77 @@ import {Select, InputLabel, MenuItem} from '@material-ui/core'
 
 export default class DeleteUpcomingCourse extends Component{
     state={
-        selectValue:'CDS 2019',
+        selectValue:'CDS June 2019',
         studentList:[],
         courseListKeys: [],
         data:'',
         array:[],
-        englishMarks:'',
-        gkMarks:'',
-        mathsMarks:'',
+       
         courseList: [],
-        marks: '',
-        gatMarks: '',
-
+        
+        courseInfo: [],
     }
     componentDidMount() {
-        
-        this.state.data = firebase.database().ref("Courses")
-        console.log("hiii")
-        this.state.data
+        var sub = this.state.selectValue
+        const data = firebase.database().ref("Courses/"+sub)
+        const courseNames = firebase.database().ref("Courses")
+        courseNames
         .on('value', datasnap => {
           if(datasnap.val())
-            {
-            this.setState({courseList: Object.values(datasnap.val())}, function() {
-              
-              console.log("List: "+this.state.courseList);
-             
-            });
 
             this.setState({courseListKeys: Object.keys(datasnap.val())}, function() {
               
-              console.log("List: "+this.state.courseListKeys);
+              //console.log("List: "+this.state.courseListKeys);
              
             });
-          }
+          })
+
+          data
+          .on('value', datasnap => {
+          if(datasnap.val())
+
+            this.setState({courseInfo: Object.values(datasnap.val())}, function() {
+              
+              //console.log("List1 : "+this.state.courseInfo);
+             
+            });
+          })
          
-        })
+        
 
     }
-
+    handleChange=(e)=>{
+      this.setState({selectValue:e.target.value},function(){
+        let sub = this.state.selectValue
+        var data = firebase.database().ref("Courses/"+sub)
+        
+        data
+        .on('value', datasnap => {
+          if(datasnap.val())
+            {
+            this.setState({courseInfo: Object.values(datasnap.val())}, function() {
+              
+              //console.log("List1: "+this.state.courseInfo);
+             
+            });        
+            
+          }
+          else{
+            this.setState({courseInfo: ''}, function(){
+              //console.log("notifications: "+this.state.notificationList)
+            })
+           
+          }
+        })
+      
+      });
+    
+  } 
+  
     renderInfo=()=>{
       var i=0;
       
-      var length = this.state.courseList.length
+      //var length = this.state.courseInfo.length
       
       const card={
         margin: '5%',
@@ -57,32 +86,14 @@ export default class DeleteUpcomingCourse extends Component{
       //console.log('l:'+length)
       
       return(
-        <div>
-        { length > 0
-        ?
-       
-        <ul>
-          {this.state.courseList.map((listitem, index) => (
+   
+        <Card key={i++} style={card}>
+          {"Name: "}{this.state.selectValue}<br />
+          {"Active Status: "}{this.state.courseInfo[0]}<br />
+          {"Details: "}{this.state.courseInfo[1]}<br />
              
-            <Card key={i++} style={card}>
-              {"Name: "}{this.state.courseListKeys[index]}<br />
-              {"Active Status: "}{listitem.ActiveStatus}<br />
-              {"Details: "}{listitem.Details}<br />
-              <div>
-                {listitem.Students.length > 0
-                ?<h5>student FOUND</h5>
-                :<h5>NO sttudent FOUND</h5>
-                }
-              </div>
-            </Card>
-                ))}
-        </ul>
-         
-        
-        
-        :<h5>NO UPCOMING COURSE FOUND</h5>
-        }
-        </div>
+        </Card>
+
       )
       
     }
@@ -90,6 +101,13 @@ export default class DeleteUpcomingCourse extends Component{
       
       return (
         <div>
+          <InputLabel id="label">Course Names</InputLabel>
+          <Select labelId="label" id="select" value={this.state.selectValue} 
+            onChange={this.handleChange} >
+          {this.state.courseListKeys.map((e, i) => {
+            return <MenuItem key={i++} value={e}>{e}</MenuItem>;
+            })}
+          </Select>
               
           {this.renderInfo()}    
         

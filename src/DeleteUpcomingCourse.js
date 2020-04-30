@@ -54,7 +54,7 @@ export default class DeleteUpcomingCourse extends Component{
 
       this.state.data.child(studentId).remove()
 
-      //console.log("Marks: "+englishMarks)
+      alert("Upcoming course Successfully Deleted!")
     }
 
     renderInfo=()=>{

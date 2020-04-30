@@ -24,24 +24,45 @@ export default class SignIn extends Component {
   handleInputChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   };
-  studentProfile = (event) => {
+  adminSignIn = (event) => {
     event.preventDefault();
     //const { email, password } = this.state;
-    
-    firebase
-    .auth()
-    .signInWithEmailAndPassword(this.state.email, this.state.password)
-    .then((user) => {
-    
-      this.props.history.push({
-        pathname: '/AdminProfile',
-        email: this.state.email});
+    const data = firebase.database().ref("Admin") 
+    data
+    .on('value', datasnap => {
+      if(datasnap.val())
+        {
+        
+          var adminEmail = Object.values(datasnap.val())
+          //console.log("Keys: "+Object.values(datasnap.val()));
+          var email = this.state.email
+          if(email.match(adminEmail))
+          {
+            firebase
+            .auth()
+            .signInWithEmailAndPassword(this.state.email, this.state.password)
+            .then((user) => {
+            
+              this.props.history.push({
+                pathname: '/AdminProfile',
+                email: this.state.email});
+            })
+              .catch(function(error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                alert(errorMessage);
+              }) 
+          }
+          else{
+            alert("Please enter email and password of admin")
+          }
+     
+        
+      }
+      
     })
-      .catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        alert(errorMessage);
-      }) 
+    
+    
      
   };
 
@@ -114,7 +135,7 @@ export default class SignIn extends Component {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={this.studentProfile}
+            onClick={this.adminSignIn}
           >
             Sign In
           </Button>
