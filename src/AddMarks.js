@@ -8,7 +8,7 @@ import {Select, InputLabel, MenuItem} from '@material-ui/core'
 
 export default class AddMarks extends Component{
     state={
-        selectValue:'CDS 2019',
+        selectValue:'CDS June 2019',
         studentList:[],
         studentListKeys: [],
         data:'',
