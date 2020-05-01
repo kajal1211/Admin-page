@@ -4,6 +4,7 @@ import firebase from './config'
 import {Button, Typography, TextField} from '@material-ui/core'
 import {Card, View} from '@material-ui/core'
 import {Select, InputLabel, MenuItem} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles';
 
 
 export default class DeleteUpcomingCourse extends Component{
@@ -58,7 +59,7 @@ export default class DeleteUpcomingCourse extends Component{
             {
             this.setState({courseInfo: Object.values(datasnap.val())}, function() {
               
-              //console.log("List1: "+this.state.courseInfo);
+              console.log("List1: "+this.state.courseInfo);
              
             });        
             
@@ -97,7 +98,126 @@ export default class DeleteUpcomingCourse extends Component{
       )
       
     }
+
+
+
+    teacherInfo=()=>{
+     
+
+      let sub = this.state.selectValue
+      let data=firebase.database().ref("Courses/"+sub+"/Teacher/")
+      let renderer=[]
+     
+      {
+        
+      data.on("value",datasnap=>{
+        console.log(datasnap.val())
+        if(datasnap.val())
+        {
+          let objs=datasnap.val()
+          let keys=Object.keys(objs)
+          for(let i=0;i<keys.length;i++){
+            let key=keys[i]
+            let todo=objs[key]
+             renderer[i]=(
+              <tr>
+                <td>{i+1}</td>
+                <td>{todo.Name}</td>
+             <td>{todo.Email}</td>
+             <td>{todo.Contact}</td>
+              </tr>
+               /*  <Card key={i} style={card}>
+                  
+             
+
+
+                </Card> */
+              
+             )
+          }
+          
+        }
+        else  renderer=(
+          <center>
+          <b><i>>No Students Admitted Yet!</i></b></center>
+        )
+      })
+      return renderer
+      }
+
+
+
+    }
+
+
+    studentInfo=()=>{
+      let sub = this.state.selectValue
+      let data=firebase.database().ref("Courses/"+sub+"/Students/")
+      let renderer=[]
+     
+    
+      
+      {
+        
+      data.on("value",datasnap=>{
+        console.log(datasnap.val())
+        if(datasnap.val())
+        {
+          let objs=datasnap.val()
+          let keys=Object.keys(objs)
+          for(let i=0;i<keys.length;i++){
+            let key=keys[i]
+            let todo=objs[key]
+             renderer[i]=(
+              <tr>
+                <td>{i+1}</td>
+                <td>{todo.Name}</td>
+             <td>{todo.Email}</td>
+             <td>{todo.Contact}</td>
+              </tr>
+               /*  <Card key={i} style={card}>
+                  
+             
+
+
+                </Card> */
+              
+             )
+          }
+          
+        }
+        else  renderer=(
+          <center>
+          <b><i>>No Students Admitted Yet!</i></b></center>
+        )
+      })
+      return renderer
+    }
+  }
+
+
+
     render() {
+      const classes = makeStyles((theme) => ({
+        paper: {
+          marginTop: '10%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        },
+       
+        /* form: {
+          width: '100%',
+         
+        }, */
+        submit: {
+          marginTop: '10%',
+        },
+        image: {
+          height: '30%',
+          width: '30%',
+        }
+      }));
       
       return (
         <div>
@@ -110,9 +230,42 @@ export default class DeleteUpcomingCourse extends Component{
           </Select>
               
           {this.renderInfo()}    
-        
-      </div>      
-          
+<div style={{marginBottom:40}}></div>
+<Card>
+ <center>
+   <b>Teacher Information:</b>
+ <table  cellSpacing={10} title='Teacher Info' style={{border: '1px solid black'}}>
+   <tr>
+     <th>Id</th>
+   <th>Name</th>
+   <th>Email</th>
+   <th>Contact</th>
+   </tr>
+  
+   {this.teacherInfo()}
+   
+ </table>
+ </center>
+ </Card>
+
+ <div style={{marginBottom:40}}></div>
+<Card>
+ <center>
+   <b>Student Information:</b>
+ <table  cellSpacing={10} title='Teacher Info' style={{border: '1px solid black'}}>
+   <tr>
+     <th>Id</th>
+   <th>Name</th>
+   <th>Email</th>
+   <th>Contact</th>
+   </tr>
+  
+   {this.studentInfo()}
+   
+ </table>
+ </center>
+ </Card>
+          </div>
         );
       }
     }

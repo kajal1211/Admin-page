@@ -49,6 +49,7 @@ class DeleteTeacher extends Component  {
   deleteTeacher=()=>{
      
     let activeState = 0;
+    let arr=[]
     let i = 0;
     const teachername = this.state.teachername
     const coursename = this.state.coursename
@@ -62,18 +63,25 @@ class DeleteTeacher extends Component  {
                 
               activeState=1;  
                 //console.log("key: " +index)
-              i=index;  
+              arr[i]=index;  
+              i++;
                   }
                 })
           if(activeState==0)
             {
-              alert("This email is not found to delelte!!!")
+              alert("This email is not found to delete!!!")
             }
           else{
-              this.state.data.child(this.state.teacherslistkeys[i]).remove()
+                for(var j=0; j<arr.length;j++)
+                {
+
+                  let k=arr[j]
+              this.state.data.child(this.state.teacherslistkeys[k]).remove()
              
-              alert("Teacher Successfully Deleted!")
-          }  
+              //console.log("removed")
+          }
+          alert('Teacher deleted successfully!')
+        }  
         }    
       
    

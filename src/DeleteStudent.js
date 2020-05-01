@@ -69,7 +69,7 @@ class DeleteStudent extends Component  {
                 })
           if(activeState===0)
             {
-                alert("This email is not found to delelte!!!")
+                alert("This email is not found to delete!!!")
             }
           else{
               //console.log("i1: "+i)
