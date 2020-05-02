@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Router, Switch, Route } from "react-router-dom";
 
 import SignIn from './SignIn'
-import history from './history'
+import history from './History'
 import AddCourse from './AddCourse';
 import AddStudent from './AddStudent'
 import AdminProfile from './AdminProfile'
